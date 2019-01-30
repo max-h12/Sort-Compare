@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - sortCompare",
+            "request": "launch",
+            "mainClass": "com.maxherz.app.sortCompare",
+            "projectName": "sortCompare"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - App",
             "request": "launch",
             "mainClass": "com.maxherz.app.App",
