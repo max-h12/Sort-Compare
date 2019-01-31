@@ -21,10 +21,11 @@ public class sortCompare {
         Sheet sheet = workbook.getSheetAt(0); // first sheet
         Row row = sheet.getRow(0); //row
         final int rowSize = 6; //rowsize. saves space
-        int numSelected = 2; //how many random numbers to sample
+        int numSelected = 4; //how many random numbers to sample
 
         String[] selected = getRand(numSelected,row,rowSize); //select numSelected number of random cells and store in array
-
+        double selSortTime = selSort(selected);
+        System.out.println("Time for selection sort: "+ selSortTime);
     }
 
     /*
@@ -51,5 +52,32 @@ public class sortCompare {
         }
         return selected;
     }
+
+    /*
+        @param arr - array to time 
+        @returns time in milliseconds to sort arr
+    */
+    private static double selSort(String arr[]) 
+    { 
+        long startTime = System.nanoTime();
+        int n = arr.length; 
+        for (int i=1; i<n; ++i) 
+        { 
+            String key = arr[i]; 
+            int j = i-1; 
+  
+            /* Move elements of arr[0..i-1], that are 
+               greater than key, to one position ahead 
+               of their current position */
+            while (j>=0 && arr[j].compareTo(key)>0) 
+            { 
+                arr[j+1] = arr[j]; 
+                j = j-1; 
+            } 
+            arr[j+1] = key; 
+        } 
+        long endTime = System.nanoTime();
+        return ((endTime - startTime)/1000000);
+    } 
 
 }
