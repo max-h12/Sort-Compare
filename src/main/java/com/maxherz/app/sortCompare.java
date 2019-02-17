@@ -22,23 +22,30 @@ public class sortCompare {
 
         String[] selected = getRand(numSelected, row, rowSize); // select numSelected number of random cells and store
 
-        System.out.println("Selected:"); //show chosen numbers
+        System.out.println("Selected:"); // show chosen numbers
         printArray(selected);
         System.out.println();
 
-        String[] selected2 = selected.clone(); //copy unsorted list so we can retime
-        double selSortTime = selSort(selected); //selection sort
-        System.out.println("Insertion Sorted:"); //array after selection sort
-        printArray(selected); 
+        String[] selected2 = selected.clone(); // copy unsorted list so we can retime
+        double selSortTime = selSort(selected); // selection sort
+        System.out.println("Selection Sorted:"); // array after selection sort
+        printArray(selected);
         System.out.println();
-        System.out.println("Time for selection sort: " + selSortTime); //time for selection sort
-    
-        selected = selected2.clone(); //copy back unsorted array to resort
-        double mergeSortTime = mergeMaster(selected); //time merge sort
-        System.out.println("Merge Sorted:"); //array after merge sort
-        printArray(selected); 
+        System.out.println("Time for selection sort: " + selSortTime); // time for selection sort
+
+        selected = selected2.clone(); // copy unsorted list so we can retime
+        double inSortTime = inSort(selected); // selection sort
+        System.out.println("Insertion Sorted:"); // array after selection sort
+        printArray(selected);
         System.out.println();
-        System.out.println("Time for merge sort: " + mergeSortTime); //time for merge sort
+        System.out.println("Time for Insertion sort: " + inSortTime); // time for selection sort
+
+        selected = selected2.clone(); // copy back unsorted array to resort
+        double mergeSortTime = mergeMaster(selected); // time merge sort
+        System.out.println("Merge Sorted:"); // array after merge sort
+        printArray(selected);
+        System.out.println();
+        System.out.println("Time for merge sort: " + mergeSortTime); // time for merge sort
 
     }
 
@@ -102,6 +109,35 @@ public class sortCompare {
      * 
      * @returns time in milliseconds to sort arr
      */
+    private static double inSort(String arr[]) {
+        long startTime = System.nanoTime();
+        int n = arr.length;
+        int i;
+        String key;
+        int j;
+        for (i = 1; i < n; i++) {
+            key = arr[i];
+            j = i - 1;
+
+            /*
+             * Move elements of arr[0..i-1], that are greater than key, to one position
+             * ahead of their current position
+             */
+            while (j >= 0 && arr[j].compareTo(key) > 0) {
+                arr[j + 1] = arr[j];
+                j = j - 1;
+            }
+            arr[j + 1] = key;
+        }
+        long endTime = System.nanoTime();
+        return ((endTime - startTime) / 1000000);
+    }
+
+    /*
+     * @param arr - array to time
+     * 
+     * @returns time in milliseconds to sort arr
+     */
     private static double mergeMaster(String[] arr) {
         long startTime = System.nanoTime();
         mergeSort(arr, arr.length);
@@ -111,6 +147,7 @@ public class sortCompare {
 
     /*
      * @param arr - array to sort
+     * 
      * @param n - length to sort through
      * 
      * @ensures arr will be sorted according to String preorder
@@ -137,9 +174,13 @@ public class sortCompare {
 
     /*
      * @param arr - array to store values
+     * 
      * @param l - left array to merge
+     * 
      * @param r - right array to merge
+     * 
      * @param left - left index
+     * 
      * @param right - right index
      * 
      * @ensures values of l and r will be merged according to String preorder
@@ -148,7 +189,7 @@ public class sortCompare {
 
         int i = 0, j = 0, k = 0;
         while (i < left && j < right) {
-            if (l[i].compareTo(r[j])<=0) {
+            if (l[i].compareTo(r[j]) <= 0) {
                 arr[k++] = l[i++];
             } else {
                 arr[k++] = r[j++];
@@ -162,13 +203,14 @@ public class sortCompare {
         }
     }
 
-    /* @param arr - array to print
+    /*
+     * @param arr - array to print
      *
      * @ensures arr is printed to console
      */
-    private static void printArray(String[]arr){
-        for(int i=0;i<arr.length;i++){
-            System.out.print(arr[i]+",");
+    private static void printArray(String[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + ",");
         }
     }
 }
