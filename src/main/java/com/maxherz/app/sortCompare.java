@@ -17,7 +17,7 @@ public class sortCompare {
         Workbook workbook = WorkbookFactory.create(new File(SAMPLE_XLSX_FILE_PATH)); // get workbook
         Sheet sheet = workbook.getSheetAt(0); // first sheet
         Row row = sheet.getRow(0); // row
-        final int rowSize = 6; // rowsize. saves space
+        final int rowSize = 11; // rowsize. saves space
         int numSelected = 4; // how many random numbers to sample
 
         String[] selected = getRand(numSelected, row, rowSize); // select numSelected number of random cells and store
@@ -46,6 +46,13 @@ public class sortCompare {
         printArray(selected);
         System.out.println();
         System.out.println("Time for merge sort: " + mergeSortTime); // time for merge sort
+
+        selected = selected2.clone(); // copy back unsorted array to resort
+        double quickSortTime = quickSortMaster(selected); // time merge sort
+        System.out.println("Quick Sorted:"); // array after merge sort
+        printArray(selected);
+        System.out.println();
+        System.out.println("Time for quick sort: " + quickSortTime); // time for merge sort
 
     }
 
@@ -123,7 +130,7 @@ public class sortCompare {
              * Move elements of arr[0..i-1], that are greater than key, to one position
              * ahead of their current position
              */
-            while (j >= 0 && arr[j].compareTo(key) > 0) {
+            while (j >= 0 && arr[j].compareTo(key)>0) {
                 arr[j + 1] = arr[j];
                 j = j - 1;
             }
@@ -212,5 +219,46 @@ public class sortCompare {
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i] + ",");
         }
+    }
+
+    private static int partition(String arr[], int low, int high) 
+    { 
+        String pivot = arr[high];  
+        int i = (low-1); // index of smaller element 
+        for (int j=low; j<high; j++) 
+        { 
+            // If current element is smaller than or 
+            // equal to pivot 
+            if (arr[j].compareTo(pivot)<=0) 
+            { 
+                i++; 
+                String temp = arr[i]; 
+                arr[i] = arr[j]; 
+                arr[j] = temp; 
+            } 
+        } 
+  
+        String temp = arr[i+1]; 
+        arr[i+1] = arr[high]; 
+        arr[high] = temp; 
+  
+        return i+1; 
+    } 
+  
+    private static void quickSort(String arr[], int low, int high) 
+    { 
+        if (low < high) 
+        { 
+            int pi = partition(arr, low, high); 
+            quickSort(arr, low, pi-1); 
+            quickSort(arr, pi+1, high); 
+        } 
+    } 
+
+    private static double quickSortMaster(String arr[]){
+        long startTime = System.nanoTime();
+        quickSort(arr, 0, arr.length-1);
+        long endTime = System.nanoTime();
+        return ((endTime - startTime) / 1000000);
     }
 }
