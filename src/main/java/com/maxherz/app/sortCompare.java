@@ -1,11 +1,11 @@
 package com.maxherz.app;
 
 import org.apache.poi.openxml4j.exceptions.*;
-import org.apache.poi.ss.formula.functions.Column;
+//import org.apache.poi.ss.formula.functions.Column;
 import org.apache.poi.ss.usermodel.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.Random;
 
 /**
  * Hello world!
@@ -20,8 +20,8 @@ public class sortCompare {
         Row row = sheet.getRow(0); // row
         
         final int rowSize = 4408; // rowsize. saves space
-        final int numSelected = 50; // how many random numbers to sample
-        final int trials = 5; //how many times to randomly sample and time
+        final int numSelected = 10; // how many random numbers to sample
+        final int trials = 2; //how many times to randomly sample and time
 
         double avgSel = 0;
         double avgIns = 0;
@@ -54,7 +54,7 @@ public class sortCompare {
 
         }
 
-        System.out.println("Time in milliseconds for "+trials+" independent trials below.");
+        System.out.println("Time in milliseconds for "+trials+" independent trials below. In each trial, data was reselected randomly");
         System.out.println("Average time for selection sort: " + Math.round(avgSel*100)/100 +" milliseconds"); 
         System.out.println("Average time for Insertion sort: " + Math.round(avgIns*100)/100 +" milliseconds"); 
         System.out.println("Average time for merge sort: " + Math.round(avgMerge*100)/100 +" milliseconds"); 
@@ -74,16 +74,20 @@ public class sortCompare {
      */
     private static String[] getRand(int num, Row row, int rowSize) {
         var dataFormatter = new DataFormatter();
-        int i = 0;
         String[] selected = new String[num];
-        HashSet<Integer> selIndex = new HashSet<>(); // chosen indecies, prevent picking the same one
-        while (i < num) {
-            int rand = (int) (Math.random() * rowSize); // pick a random index. if it hasnt been chosen, use it
-            if (!selIndex.contains(rand)) {
-                selected[i] = dataFormatter.formatCellValue(row.getCell(rand));
-                selIndex.add(rand);
-                i++;
+        Random r = new Random();
+        int high =rowSize/num;
+        int low = 0;
+
+        for (int index=0;index<num;index++) {
+            int rand =Integer.MAX_VALUE;
+
+            while(rand>=rowSize){
+                rand = r.nextInt(high-low)+low; 
             }
+            selected[index] = dataFormatter.formatCellValue(row.getCell(rand));
+            high += rowSize/num;
+            low+=rowSize/num;
         }
         return selected;
     }
