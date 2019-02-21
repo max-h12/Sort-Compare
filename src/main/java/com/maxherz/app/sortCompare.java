@@ -19,15 +19,16 @@ public class sortCompare {
         Sheet sheet = workbook.getSheetAt(0); // first sheet
         Row row = sheet.getRow(0); // row
         
-        final int rowSize = 4408; // rowsize. saves space
-        final int numSelected = 10; // how many random numbers to sample
-        final int trials = 2; //how many times to randomly sample and time
+        final int rowSize = 10000; // rowsize. saves space
+        final int numSelected = 10000; // how many random numbers to sample
+        final int trials = 10; //how many times to randomly sample and time
 
         double avgSel = 0;
         double avgIns = 0;
         double avgMerge = 0;
         double avgQuick = 0;
         double avgBogo=0;
+        double avgfQuickSort =0;
 
         for(int i=0;i<trials;i++){
             String[] selected = getRand(numSelected, row, rowSize); // select numSelected number of random cells and store
@@ -49,8 +50,12 @@ public class sortCompare {
             avgQuick += (quickSortTime)/trials;
 
             selected = selected2.clone(); 
-            double bogoSortTime = bogoSortMaster(selected); 
-            avgBogo += (bogoSortTime)/trials; 
+            double fQuickSortTime = fancyQuickSortMaster(selected); 
+            avgfQuickSort += (fQuickSortTime)/trials; 
+
+            //selected = selected2.clone(); 
+            //double bogoSortTime = bogoSortMaster(selected); 
+            //avgBogo += (bogoSortTime)/trials; 
 
         }
 
@@ -59,7 +64,8 @@ public class sortCompare {
         System.out.println("Average time for Insertion sort: " + Math.round(avgIns*100)/100 +" milliseconds"); 
         System.out.println("Average time for merge sort: " + Math.round(avgMerge*100)/100 +" milliseconds"); 
         System.out.println("Average time for quick sort: " + Math.round(avgQuick*100)/100 +" milliseconds"); 
-        System.out.println("Average time for bogo sort: " + Math.round(avgBogo*100)/100 +" milliseconds");
+        System.out.println("Average time for quick sort (with insertion sort under 50 items): " + Math.round(avgfQuickSort*100)/100 +" milliseconds"); 
+        //System.out.println("Average time for bogo sort: " + Math.round(avgBogo*100)/100 +" milliseconds");
 
 
     }
@@ -316,5 +322,25 @@ public class sortCompare {
                 return false; 
         return true; 
     } 
+
+    private static double fancyQuickSortMaster(String arr[]){
+        long startTime = System.nanoTime();
+        fancyQuickSort(arr, 0, arr.length-1);
+        long endTime = System.nanoTime();
+        return ((endTime - startTime) / 1000000);
+    }
+
+    private static void fancyQuickSort(String arr[], int low, int high){
+        if(arr.length<=50){
+            inSort(arr);
+        }
+
+        if (low < high) 
+        { 
+            int pi = partition(arr, low, high); 
+            quickSort(arr, low, pi-1); 
+            quickSort(arr, pi+1, high); 
+        } 
+    }
 
 }
