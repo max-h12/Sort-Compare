@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Frame",
+            "request": "launch",
+            "mainClass": "com.maxherz.app.Frame",
+            "projectName": "sortCompare"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - SimpleJButton",
+            "request": "launch",
+            "mainClass": "com.maxherz.app.SimpleJButton",
+            "projectName": "sortCompare"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - sortCompare",
             "request": "launch",
             "mainClass": "com.maxherz.app.sortCompare",

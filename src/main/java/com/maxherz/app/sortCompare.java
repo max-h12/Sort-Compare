@@ -3,14 +3,14 @@ package com.maxherz.app;
 import org.apache.poi.openxml4j.exceptions.*;
 //import org.apache.poi.ss.formula.functions.Column;
 import org.apache.poi.ss.usermodel.*;
+
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import javax.swing.*;
 
-/**
- * Hello world!
- *
- */
+
 public class sortCompare {
 
     public static void main(String[] args) throws IOException, InvalidFormatException {
@@ -18,10 +18,13 @@ public class sortCompare {
         Workbook workbook = WorkbookFactory.create(new File(SAMPLE_XLSX_FILE_PATH)); // get workbook
         Sheet sheet = workbook.getSheetAt(0); // first sheet
         Row row = sheet.getRow(0); // row
+
+        Frame frame = new Frame();
+        frame.run();
         
         final int rowSize = 10000; // rowsize. saves space
         final int numSelected = 10000; // how many random numbers to sample
-        final int trials = 10; //how many times to randomly sample and time
+        int trials = frame.trials(); //how many times to randomly sample and time
 
         double avgSel = 0;
         double avgIns = 0;
