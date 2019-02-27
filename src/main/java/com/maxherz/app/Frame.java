@@ -1,33 +1,44 @@
 package com.maxherz.app;
 
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Scanner;
 
-public class Frame {
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-    String input;
-    boolean isRunning;
+public class Frame extends JFrame implements ActionListener {
 
-    public Frame(){
-         input ="";
-         isRunning=true;
+    static Scanner sc = new Scanner(System.in);
+    static String s;
+    static JTextField textfield;
+    static JButton jButton;
+
+    public void showFrame() {
+        JFrame jf = new JFrame();
+        textfield = new JTextField("", 10);
+        jButton = new JButton("Enter");
+        jButton.addActionListener(new Frame());
+        JPanel panel = new JPanel();
+        JLabel jl = new JLabel("Options");
+        jf.setSize(200, 200);
+        jf.setVisible(true);
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jf.add(panel);
+        panel.add(jl);
+        panel.add(textfield);
+        panel.add(jButton);
     }
 
-    public void run() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                input = JOptionPane.showInputDialog(null, "Number of trials?");
-                System.out.println("Trials: " + input);
-            }
-        });
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+        s = textfield.getText();
     }
 
-    public int trials(){
-        isRunning = false;
-        return Integer.parseInt(input);
-    }
-
-    public boolean running(){
-        return isRunning;
+    public String reportVal(){
+        return s;
     }
 }

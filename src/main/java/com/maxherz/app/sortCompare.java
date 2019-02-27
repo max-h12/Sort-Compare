@@ -20,11 +20,13 @@ public class sortCompare {
         Row row = sheet.getRow(0); // row
 
         Frame frame = new Frame();
-        frame.run();
-        
+        frame.showFrame();
+
         final int rowSize = 10000; // rowsize. saves space
         final int numSelected = 10000; // how many random numbers to sample
-        int trials = frame.trials(); //how many times to randomly sample and time
+        Timer t = new Timer(1000, frame);
+        t.start();
+        int trials = Integer.parseInt(frame.reportVal()); //how many times to randomly sample and time
 
         double avgSel = 0;
         double avgIns = 0;
