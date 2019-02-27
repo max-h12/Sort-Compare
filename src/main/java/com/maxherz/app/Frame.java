@@ -38,7 +38,4 @@ public class Frame extends JFrame implements ActionListener {
         s = textfield.getText();
     }
 
-    public String reportVal(){
-        return s;
-    }
 }

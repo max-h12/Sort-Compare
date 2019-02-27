@@ -25,6 +25,8 @@ public class sortCompare {
         JCheckBox bogoBox = new JCheckBox("Bogo Sort? WARNING: O(n!)");
         JCheckBox fancyBox = new JCheckBox("Modified Quick Sort?");
 
+        JFrame f = new JFrame("Input");
+        f.setDefaultCloseOperation(f.EXIT_ON_CLOSE);
         JPanel myPanel = new JPanel(); // create and add to panel
         myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.PAGE_AXIS));
         myPanel.add(new JLabel("File Path:"));
@@ -37,7 +39,7 @@ public class sortCompare {
         myPanel.add(rowSizeField);
         myPanel.add(new JLabel("Trials:"));
         myPanel.add(trialField);
-        myPanel.add(Box.createHorizontalStrut(15));
+        //myPanel.add(Box.createHorizontalStrut(15));
         myPanel.add(new JLabel("How many to select:"));
         myPanel.add(selectedField);
         myPanel.add(selectionBox);
@@ -46,6 +48,8 @@ public class sortCompare {
         myPanel.add(quickBox);
         myPanel.add(fancyBox);
         myPanel.add(bogoBox);
+        f.add(myPanel);
+
 
         int result = JOptionPane.showConfirmDialog(null, myPanel, "Please Enter Variables",
                 JOptionPane.OK_CANCEL_OPTION);
@@ -118,6 +122,26 @@ public class sortCompare {
                 double bogoSortTime = bogoSortMaster(selected);
                 avgBogo += (bogoSortTime) / trials;
             }
+        }
+
+        JTextField selTimeField = new JTextField("Average Sel Time"); // how many trials
+
+        
+        JFrame o = new JFrame("Output");
+        o.setDefaultCloseOperation(f.EXIT_ON_CLOSE);
+        JPanel oPanel = new JPanel(); // create and add to panel
+
+
+        oPanel.add(new JLabel("Average Selection Sort Time:"));
+        oPanel.add(selTimeField);
+        selTimeField.setText(Math.round(avgSel * 100) / 100 + " milliseconds");
+        //add the rest
+
+        o.add(oPanel);
+
+        int result2 = JOptionPane.showConfirmDialog(null, oPanel, "Output", JOptionPane.CLOSED_OPTION);
+        if (result2 == JOptionPane.CLOSED_OPTION) {
+            return;
         }
 
         System.out.println("Time in milliseconds for " + trials + " independent trials below. In each trial, "
