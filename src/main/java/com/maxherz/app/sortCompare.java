@@ -20,13 +20,19 @@ public class sortCompare {
         Row row = sheet.getRow(0); // row
 
         Frame frame = new Frame();
-        frame.showFrame();
+        Object[] options = { "1", "2", "3","4","5","6","7","8","9","10" };
+        Object[] options2 = { "yes","no" };
+
+        int n = JOptionPane.showOptionDialog(frame, "How many trials?",
+                "Variables", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+                options[2]);
+        int test = JOptionPane.showOptionDialog(frame, "Same box?",
+        "Variables", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options2,
+        options[2]);
 
         final int rowSize = 10000; // rowsize. saves space
         final int numSelected = 10000; // how many random numbers to sample
-        Timer t = new Timer(1000, frame);
-        t.start();
-        int trials = Integer.parseInt(frame.reportVal()); //how many times to randomly sample and time
+        int trials=n+1; //how many times to randomly sample and time
 
         double avgSel = 0;
         double avgIns = 0;
