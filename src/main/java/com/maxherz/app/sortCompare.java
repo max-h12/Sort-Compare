@@ -19,6 +19,27 @@ public class sortCompare {
         Sheet sheet = workbook.getSheetAt(0); // first sheet
         Row row = sheet.getRow(0); // row
 
+        JTextField trialField = new JTextField(5);
+        JTextField selectedField = new JTextField(5);
+        JTextField rowSizeField = new JTextField(5);
+
+        JPanel myPanel = new JPanel();
+        myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.PAGE_AXIS));
+        myPanel.add(new JLabel("Row Size:"));
+        myPanel.add(rowSizeField);
+        myPanel.add(new JLabel("Trials:"));
+        myPanel.add(trialField);
+        myPanel.add(Box.createHorizontalStrut(15));
+        myPanel.add(new JLabel("How many to select:"));
+        myPanel.add(selectedField);
+        
+        int result = JOptionPane.showConfirmDialog(null, myPanel, "Please Enter Variables",
+                JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.CANCEL_OPTION) {
+            return;
+        }
+
+        /*
         Frame frame = new Frame();
         Object[] options = { "1", "2", "3","4","5","6","7","8","9","10" };
         Object[] options2 = { "yes","no" };
@@ -26,13 +47,18 @@ public class sortCompare {
         int n = JOptionPane.showOptionDialog(frame, "How many trials?",
                 "Variables", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
                 options[2]);
-        int test = JOptionPane.showOptionDialog(frame, "Same box?",
+        int sel = JOptionPane.showOptionDialog(frame, "Same box?",
         "Variables", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options2,
         options[2]);
+        */
 
-        final int rowSize = 10000; // rowsize. saves space
-        final int numSelected = 10000; // how many random numbers to sample
-        int trials=n+1; //how many times to randomly sample and time
+        System.out.println("Recorded row size: " +Integer.parseInt(rowSizeField.getText()));
+        System.out.println("Recorded trials: " +Integer.parseInt(trialField.getText()));
+        System.out.println("Recorded selected size: " +Integer.parseInt(selectedField.getText()));
+
+        final int rowSize = Integer.parseInt(rowSizeField.getText()); // rowsize. saves space
+        final int numSelected = Integer.parseInt(selectedField.getText()); // how many random numbers to sample
+        int trials=Integer.parseInt(trialField.getText()); //how many times to randomly sample and time
 
         double avgSel = 0;
         double avgIns = 0;
@@ -70,7 +96,7 @@ public class sortCompare {
 
         }
 
-        System.out.println("Time in milliseconds for "+trials+" independent trials below. In each trial, data was reselected randomly");
+        System.out.println("Time in milliseconds for "+trials+" independent trials below. In each trial, "+numSelected+" items were reselected randomly");
         System.out.println("Average time for selection sort: " + Math.round(avgSel*100)/100 +" milliseconds"); 
         System.out.println("Average time for Insertion sort: " + Math.round(avgIns*100)/100 +" milliseconds"); 
         System.out.println("Average time for merge sort: " + Math.round(avgMerge*100)/100 +" milliseconds"); 
