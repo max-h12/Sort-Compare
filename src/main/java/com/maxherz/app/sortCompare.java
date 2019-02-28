@@ -51,6 +51,12 @@ public class sortCompare {
         myPanel.add(bogoBox);
         f.add(myPanel);
 
+        filePath.setText("./testData.xlsx");
+        sheetNum.setText("1");
+        rowField.setText("1");
+        rowSizeField.setText("10000");
+        trialField.setText("5");
+        selectedField.setText("6000");
 
         int result = JOptionPane.showConfirmDialog(null, myPanel, "Please Enter Variables",
                 JOptionPane.OK_CANCEL_OPTION);
@@ -67,16 +73,16 @@ public class sortCompare {
         boolean bog = bogoBox.isSelected();
 
         // commented to save time testing
-        String FILE_PATH = "./testData.xlsx"; // filePath.getText();
+        String FILE_PATH = filePath.getText();
         Workbook workbook = WorkbookFactory.create(new File(FILE_PATH));
-        Sheet sheet = workbook.getSheetAt(0); // Integer.parseInt(sheetNum.getText())-1
-        Row row = sheet.getRow(0); // Integer.parseInt(rowField.getText())-1;
+        Sheet sheet = workbook.getSheetAt(Integer.parseInt(sheetNum.getText())-1); 
+        Row row = sheet.getRow(Integer.parseInt(rowField.getText())-1); 
 
         // commented to save time testing
-        final int rowSize = 10000; // rowsize. saves space Integer.parseInt(rowSizeField.getText())
-        final int numSelected = 5000; // how many random numbers to sample Integer.parseInt(selectedField.getText())
-        int trials = 5; // how many times to randomly sample and time
-                        // Integer.parseInt(trialField.getText())
+        final int rowSize = Integer.parseInt(rowSizeField.getText()); // rowsize. saves time by asking user
+        final int numSelected = Integer.parseInt(selectedField.getText()); // how many random numbers to sample 
+        int trials = Integer.parseInt(trialField.getText()); // how many times to randomly sample and time
+                        
 
         double avgSel = 0;
         double avgIns = 0;
@@ -125,19 +131,57 @@ public class sortCompare {
             }
         }
 
-        JTextField selTimeField = new JTextField("Average Sel Time"); // how many trials
 
         
         JFrame o = new JFrame("Output");
         o.setDefaultCloseOperation(f.EXIT_ON_CLOSE);
         JPanel oPanel = new JPanel(); // create and add to panel
+        oPanel.setLayout(new BoxLayout(oPanel, BoxLayout.PAGE_AXIS));
+        if(ins||sel||mer||qui||fan||bog){ //if at least one sort is selected
+            oPanel.add(new JLabel("Time for " + trials + " independent trials below. In each trial, "
+            + numSelected + " items were reselected randomly"));
+            oPanel.add(new JLabel(" "));
+        }
 
-
-        oPanel.add(new JLabel("Average Selection Sort Time:"));
-        oPanel.add(selTimeField);
-        selTimeField.setText(Math.round(avgSel * 100) / 100 + " milliseconds");
-        //add the rest
-
+        if(sel){
+            JTextField selTimeField = new JTextField("Average Selection Sort Time"); // how many trials
+            oPanel.add(new JLabel("Average Selection Sort Time:"));
+            oPanel.add(selTimeField);
+            selTimeField.setText(Math.round(avgSel * 100) / 100 + " milliseconds");
+        }
+        if(ins){
+            JTextField inTimeField = new JTextField("Average Insertion Sort Time"); // how many trials
+            oPanel.add(new JLabel("Average Insertion Sort Time:"));
+            oPanel.add(inTimeField);
+            inTimeField.setText(Math.round(avgIns * 100) / 100 + " milliseconds");
+        }
+        if(mer){
+            JTextField merTimeField = new JTextField("Average Merge Sort Time"); // how many trials
+            oPanel.add(new JLabel("Average Merge Sort Time:"));
+            oPanel.add(merTimeField);
+            merTimeField.setText(Math.round(avgMerge * 100) / 100 + " milliseconds");
+        }
+        if(qui){
+            JTextField quiTimeField = new JTextField("Average Quick Sort Time"); // how many trials
+            oPanel.add(new JLabel("Average Quick Sort Time:"));
+            oPanel.add(quiTimeField);
+            quiTimeField.setText(Math.round(avgQuick* 100) / 100 + " milliseconds");
+        }
+        if(fan){
+            JTextField fTimeField = new JTextField("Average Modified Quick Sort Time"); // how many trials
+            oPanel.add(new JLabel("Average Modified Quick Sort Time:"));
+            oPanel.add(fTimeField);
+            fTimeField.setText(Math.round(avgfQuickSort* 100) / 100 + " milliseconds");
+        }
+        if(bog){
+            JTextField bogTimeField = new JTextField("Average Bogo Sort Time"); // how many trials
+            oPanel.add(new JLabel("Average Bogo Sort Time:"));
+            oPanel.add(bogTimeField);
+            bogTimeField.setText(Math.round(avgBogo* 100) / 100 + " milliseconds");
+        }
+        if(!ins&&!sel&&!mer&&!qui&&!fan&&!bog){ //if no sorts
+            oPanel.add(new JLabel("No Sorts were Selected"));
+        }
         o.add(oPanel);
 
         int result2 = JOptionPane.showConfirmDialog(null, oPanel, "Output", JOptionPane.CLOSED_OPTION);
@@ -145,6 +189,7 @@ public class sortCompare {
             return;
         }
 
+        /*
         System.out.println("Time in milliseconds for " + trials + " independent trials below. In each trial, "
                 + numSelected + " items were reselected randomly");
         if (sel) {
@@ -166,6 +211,7 @@ public class sortCompare {
         if (bog) {
             System.out.println("Average time for bogo sort: " + Math.round(avgBogo * 100) / 100 + " milliseconds");
         }
+        */
 
     }
 
