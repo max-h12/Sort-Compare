@@ -36,12 +36,11 @@ public class sortCompare {
         myPanel.add(sheetNum);
         myPanel.add(new JLabel("Row Number:"));
         myPanel.add(rowField);
-        myPanel.add(new JLabel("Row Size:"));
+        myPanel.add(new JLabel("Total Row Size:"));
         myPanel.add(rowSizeField);
-        myPanel.add(new JLabel("Trials:"));
+        myPanel.add(new JLabel("Number of Trials:"));
         myPanel.add(trialField);
-        //myPanel.add(Box.createHorizontalStrut(15));
-        myPanel.add(new JLabel("How many to select:"));
+        myPanel.add(new JLabel("How many samples:"));
         myPanel.add(selectedField);
         myPanel.add(selectionBox);
         myPanel.add(insertionBox);
@@ -49,6 +48,9 @@ public class sortCompare {
         myPanel.add(quickBox);
         myPanel.add(fancyBox);
         myPanel.add(bogoBox);
+        myPanel.add(new JLabel(" "));
+        myPanel.add(new JLabel("Ensure accurate information above,"));
+        myPanel.add(new JLabel("very little error checking implemented (so far)"));
         f.add(myPanel);
 
         filePath.setText("./testData.xlsx");
@@ -64,7 +66,6 @@ public class sortCompare {
             return;
         }
 
-        System.out.println(selectionBox.isSelected());
         boolean sel = selectionBox.isSelected(); // which sorts should we do
         boolean ins = insertionBox.isSelected();
         boolean mer = mergeBox.isSelected();
@@ -130,7 +131,6 @@ public class sortCompare {
                 avgBogo += (bogoSortTime) / trials;
             }
         }
-
 
         
         JFrame o = new JFrame("Output");
@@ -214,6 +214,7 @@ public class sortCompare {
         */
 
     }
+
 
     /*
      * @param num - number of cells to select
