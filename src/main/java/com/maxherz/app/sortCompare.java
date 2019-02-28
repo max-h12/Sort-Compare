@@ -6,6 +6,7 @@ import org.apache.poi.ss.usermodel.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Random;
 import javax.swing.*;
 
@@ -184,18 +185,30 @@ public class sortCompare {
         var dataFormatter = new DataFormatter();
         String[] selected = new String[num];
         Random r = new Random();
-        int high = rowSize / num;
-        int low = 0;
+        if (num * 2 < rowSize) { //if we select a small subset, use proportional select
+            int high = rowSize / num;
+            int low = 0;
 
-        for (int index = 0; index < num; index++) {
-            int rand = Integer.MAX_VALUE;
-
-            while (rand >= rowSize) {
-                rand = r.nextInt(high - low) + low;
+            for (int index = 0; index < num; index++) {
+                int rand = Integer.MAX_VALUE;
+                while (rand >= rowSize) {
+                    rand = r.nextInt(high - low) + low;
+                }
+                selected[index] = dataFormatter.formatCellValue(row.getCell(rand));
+                high += rowSize / num;
+                low += rowSize / num;
             }
-            selected[index] = dataFormatter.formatCellValue(row.getCell(rand));
-            high += rowSize / num;
-            low += rowSize / num;
+        }
+        else{ //if we select more than half of the elements, no point in proportional selection. Just random
+            HashSet<Integer> chosen = new HashSet<>();
+            for (int index = 0; index < num; index++) {
+                int rand = r.nextInt(rowSize);
+                while(chosen.contains(rand)){ //repick to get unique value
+                    rand = r.nextInt(rowSize);
+                }
+                chosen.add(rand);
+                selected[index]=dataFormatter.formatCellValue(row.getCell(rand));
+            }
         }
         return selected;
     }
