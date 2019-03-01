@@ -189,30 +189,6 @@ public class sortCompare {
             return;
         }
 
-        /*
-        System.out.println("Time in milliseconds for " + trials + " independent trials below. In each trial, "
-                + numSelected + " items were reselected randomly");
-        if (sel) {
-            System.out.println("Average time for selection sort: " + Math.round(avgSel * 100) / 100 + " milliseconds");
-        }
-        if (ins) {
-            System.out.println("Average time for Insertion sort: " + Math.round(avgIns * 100) / 100 + " milliseconds");
-        }
-        if (mer) {
-            System.out.println("Average time for merge sort: " + Math.round(avgMerge * 100) / 100 + " milliseconds");
-        }
-        if (qui) {
-            System.out.println("Average time for quick sort: " + Math.round(avgQuick * 100) / 100 + " milliseconds");
-        }
-        if (fan) {
-            System.out.println("Average time for quick sort (with insertion sort under 50 items): "
-                    + Math.round(avgfQuickSort * 100) / 100 + " milliseconds");
-        }
-        if (bog) {
-            System.out.println("Average time for bogo sort: " + Math.round(avgBogo * 100) / 100 + " milliseconds");
-        }
-        */
-
     }
 
 
