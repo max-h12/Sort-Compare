@@ -1,4 +1,5 @@
 # Sort-Compare - Compares sorting algorithms on a sampled subset of data
+# Main File: ./src/app/sortCompare.java
 
 1) Takes input in the form of an Excel Sheet Row specified in FILEPATH
 2) Program then asks for input on how many items to sample and which sorting algorithms it should time
